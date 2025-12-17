@@ -1,0 +1,19 @@
+# Not: Kafka ve Elasticsearch production'da genellikle managed (Confluent Cloud, Elastic Cloud)
+# veya ayrı cluster'da olur. Burada basit ExternalName örnekleri veriyoruz.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  type: ExternalName
+  externalName: kafka.default.svc.cluster.local  # docker-compose'daki gibi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+spec:
+  type: ExternalName
+  externalName: elasticsearch.default.svc.cluster.local

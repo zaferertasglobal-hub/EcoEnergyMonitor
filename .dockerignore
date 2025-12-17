@@ -1,0 +1,14 @@
+**/bin
+**/obj
+**/out
+.git
+.gitignore
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+Dockerfile*
+docker-compose*
+README.md

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eco-processor
+  labels:
+    app: eco-processor
+spec:
+  replicas: 2  # Ölçeklenebilir kısım, senior düşüncesi gösterir
+  selector:
+    matchLabels:
+      app: eco-processor
+  template:
+    metadata:
+      labels:
+        app: eco-processor
+    spec:
+      containers:
+      - name: processor
+        image: eco-processor:latest
+        imagePullPolicy: Never
+        env:
+        - name: KAFKA_BOOTSTRAP
+          value: "kafka:9092"
+        - name: ELASTICSEARCH_URL
+          value: "http://elasticsearch:9200"
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "400m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eco-processor
+spec:
+  selector:
+    app: eco-processor
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

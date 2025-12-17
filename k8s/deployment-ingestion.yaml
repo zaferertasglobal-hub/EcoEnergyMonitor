@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eco-ingestion
+  labels:
+    app: eco-ingestion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eco-ingestion
+  template:
+    metadata:
+      labels:
+        app: eco-ingestion
+    spec:
+      containers:
+      - name: ingestion
+        image: eco-ingestion:latest  # Gerçek repo'da kendi image'ını kullanırsın
+        imagePullPolicy: Never  # Local build için, production'da Always veya IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eco-ingestion
+spec:
+  selector:
+    app: eco-ingestion
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
