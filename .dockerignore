@@ -7,6 +7,7 @@
 .vscode/
 *.user
 *.suo
+.env
 *.userosscache
 *.sln.docstates
 Dockerfile*
